@@ -1,5 +1,7 @@
 # Constraint Programming am Rucksackproblem – Streamlit-Demo
 
+**[→ Demo live ausprobieren](https://sebastianhanisch-constraint-programming-demo.streamlit.app/)**
+
 Fünftes Stück der "Konzepte"-Reihe für die Website "Sebastian Hanisch – Operations
 Research und Machine Learning", **Exakte-Suche-Linie** - ein **unabhängiger Zweig**
 ab [branch-bound-demo](../branch-bound-demo): keine Fortsetzung, kein Kontrast (wie
