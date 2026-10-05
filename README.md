@@ -74,6 +74,11 @@ Fehlerfall auch wirklich eintritt - live nachmessen, bevor er in UI/Doku landet.
   Knoten trägt je den entfernten `prune_incompatible`-Status.
 - **Bruteforce- und OR-Tools-Cross-Check**: `best_value` muss mit beiden
   unabhängigen Referenzen übereinstimmen.
+- **Unabhängiges Orakel** (`tests/test_oracle_enumeration.py`): reine Aufzählung aller Belegungen
+  gegen Optimalwert und Zulässigkeit; die Kennzahl "Automatisch ausgeschlossen (Kapazität)" zählt
+  nur Pakete, die tatsächlich nicht mehr in die Restkapazität passen. (Ein früherer Knotenstatus
+  "Gestutzt (Kapazität)" war strukturell unmöglich und stand in jedem Lauf auf 0 - er wurde durch
+  diese Kennzahl ersetzt.)
 - **Knotenzahl-Ordnung**: `csp_solver` braucht nie mehr Knoten als
   `csp_bnb_reference` auf derselben Instanz.
 - **Sicherheitsgrenzen**: `MAX_NODES_EXPLORED` wird zuverlässig eingehalten.

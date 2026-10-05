@@ -14,10 +14,10 @@ def compute_stats(result):
     total_incompatibility_exclusions = sum(len(node.incompatibility_exclusions) for node in result.nodes)
     return {
         "nodes_explored": nodes_explored,
-        "pruned_infeasible": counts["prune_infeasible"],
         "pruned_bound": counts["prune_bound"],
         "leaves_evaluated": counts["leaf_new_best"] + counts["leaf_not_best"],
         "incompatibility_exclusions": total_incompatibility_exclusions,
+        "capacity_exclusions": sum(len(node.capacity_exclusions) for node in result.nodes),
         "best_value": result.best_value,
         "truncated": result.truncated,
     }
@@ -32,8 +32,8 @@ def stats_up_to_step(result, step):
             current_best = v
     return {
         "nodes_so_far": counts.total(),
-        "pruned_infeasible": counts["prune_infeasible"],
         "pruned_bound": counts["prune_bound"],
+        "capacity_exclusions": sum(len(node.capacity_exclusions) for node in visited),
         "incompatibility_exclusions": sum(len(node.incompatibility_exclusions) for node in visited),
         "current_best": current_best,
     }

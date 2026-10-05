@@ -218,8 +218,9 @@ live = stats_up_to_step(result, step)
 lm1, lm2, lm3, lm4 = st.columns(4)
 lm1.metric("Besuchte Knoten (bisher)", f"{live['nodes_so_far']:,}")
 lm2.metric(
-    "Gestutzt (Kapazität)", f"{live['pruned_infeasible']:,}",
-    help="Ein noch offenes Paket wurde ausgeschlossen, weil es das Gewichtslimit überschritten hätte.",
+    "Automatisch ausgeschlossen (Kapazität)", f"{live['capacity_exclusions']:,}",
+    help="Pakete, die die Propagation automatisch mit-ausgeschlossen hat, weil sie das Gewichtslimit überschritten "
+    "hätten - ohne dass die Suche sie je einzeln ausprobieren musste.",
 )
 lm3.metric(
     "Automatisch ausgeschlossen (Kompatibilität)", f"{live['incompatibility_exclusions']:,}",

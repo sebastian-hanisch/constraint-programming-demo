@@ -1,5 +1,5 @@
 """Plotly-Suchbaum, Portierung von branch-bound-demo/bb_visualization.py. Bewusst
-dieselben fünf Pruning-/Knoten-Status wie dort - kein eigener "durch Kompatibilität
+dieselben Pruning-/Knoten-Status wie dort - kein eigener "durch Kompatibilität
 unzulässig"-Status (siehe csp_solver.py's Modul-Docstring, warum das bei dieser
 Suchreihenfolge unmöglich ist). Der Effekt der Kompatibilitätsregeln zeigt sich
 stattdessen im Hovertext: wie viele Pakete die Propagation an JEDEM Knoten automatisch
@@ -8,12 +8,11 @@ mit-ausgeschlossen hat."""
 STATUS_STYLE = {
     "root": {"color": "#14233B", "label": "Start"},
     "branch": {"color": "#1f77b4", "label": "Verzweigt (weiter untersucht)"},
-    "prune_infeasible": {"color": "#9aa6ba", "label": "Gestutzt (Kapazität)"},
     "prune_bound": {"color": "#d68a2e", "label": "Gestutzt (kann nicht mehr verbessern)"},
     "leaf_new_best": {"color": "#2ca02c", "label": "Neue beste Lösung"},
     "leaf_not_best": {"color": "#c4cbd8", "label": "Vollständig, nicht besser"},
 }
-STATUS_ORDER = ["root", "branch", "prune_infeasible", "prune_bound", "leaf_new_best", "leaf_not_best"]
+STATUS_ORDER = ["root", "branch", "prune_bound", "leaf_new_best", "leaf_not_best"]
 
 
 def _compute_layout(nodes):
@@ -51,10 +50,12 @@ def _node_label(node, instance):
         )
         label = f"{decision_txt}<br>Gewicht bisher: {node.weight} / {instance.capacity}<br>Wert bisher: {node.value}"
 
-        if node.status == "prune_infeasible":
-            label += "<br>Kapazität überschritten"
-        elif node.status == "prune_bound" and node.detail is not None:
+        if node.status == "prune_bound" and node.detail is not None:
             label += f"<br>Erreichbar höchstens {node.detail} - kann bisherigen besten Fund nicht mehr übertreffen"
+
+    if node.capacity_exclusions:
+        names = ", ".join(f"Paket {i + 1}" for i in node.capacity_exclusions)
+        label += f"<br>Automatisch ausgeschlossen (Kapazität): {names}"
 
     if node.incompatibility_exclusions:
         names = ", ".join(f"Paket {i + 1}" for i in node.incompatibility_exclusions)
